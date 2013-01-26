@@ -1,3 +1,8 @@
+;; set language Japanese
+(set-language-environment 'Japanese)
+;; UTF-8
+(prefer-coding-system 'utf-8)
+
 ;; マウスで選択するとコピーする Emacs 24 ではデフォルトが nil
 (setq mouse-drag-copy-region t)
 

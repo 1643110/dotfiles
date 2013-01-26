@@ -11,6 +11,23 @@
 (set-cursor-color "Gray")
 ))
 
+;; make window transparent(windowの透明化)
+(set-frame-parameter nil 'alpha 85)
+
+;====================================
+;;jaspace.el を使った全角空白、タブ、改行表示モード
+;;切り替えは M-x jaspace-mode-on or -off
+;====================================
+;(require 'jaspace)
+;; 全角空白を表示させる。
+;(setq jaspace-alternate-jaspace-string "□")
+
+;; タブ記号を表示。
+;;(setq jaspace-highlight-tabs t) ; highlight tabs
+;(setq jaspace-highlight-tabs ?^ ) ; use ^ as a tab marker
+
+
+
 ;; マウスで選択するとコピーする Emacs 24 ではデフォルトが nil
 (setq mouse-drag-copy-region t)
 

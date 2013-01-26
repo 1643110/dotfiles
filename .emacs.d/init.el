@@ -3,6 +3,14 @@
 ;; UTF-8
 (prefer-coding-system 'utf-8)
 
+;; set window status
+(if window-system (progn
+(setq initial-frame-alist '((width . 200)(height . 45)(top . 0)(left . 0)))
+(set-background-color "Black")
+(set-foreground-color "White")
+(set-cursor-color "Gray")
+))
+
 ;; マウスで選択するとコピーする Emacs 24 ではデフォルトが nil
 (setq mouse-drag-copy-region t)
 

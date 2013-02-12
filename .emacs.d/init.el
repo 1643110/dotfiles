@@ -5,7 +5,7 @@
 
 ;; set window status
 (if window-system (progn
-(setq initial-frame-alist '((width . 200)(height . 45)(top . 0)(left . 0)))
+(setq initial-frame-alist '((width . 100)(height . 45)(top . 0)(left . 0)))
 (set-background-color "Black")
 (set-foreground-color "White")
 (set-cursor-color "Gray")
@@ -68,6 +68,32 @@
     ;; 以下、自動で補完する人用
     (setq ac-auto-start 3)
 
+;;================================
+;;
+;;     Ruby on Rails 
+;;
+;;================================
+;; rinariの設定
+(add-to-list 'load-path "~/.emacs.d/elisp/rinari")
+(require 'rinari nil t)
+
+;;rhtml-modeの設定
+(add-to-list 'load-path "~/.emacs.d/elisp/rhtml")
+(when (require 'rhtml-mode nil t)
+  (add-hook 'rhtml-mode-hook
+	    (lambda () (rinari-launch)))
+)
+
+;; rails-yasnippetのロード
+(require 'yasnippet)
+;(yas/initialize)
+;(yas/load-directory "~/.emacs.d/elisp/yasnippets-rails/rails-snippets")
+
+;;================================
+;;
+;;     anything
+;;
+;;================================
 ;; anything の設定
 (when (require 'anything-startup nil t)
   (global-set-key (kbd "\C-x b") 'anything)

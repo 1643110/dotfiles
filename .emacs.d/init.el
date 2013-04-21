@@ -26,6 +26,8 @@
 ;;(setq jaspace-highlight-tabs t) ; highlight tabs
 ;(setq jaspace-highlight-tabs ?^ ) ; use ^ as a tab marker
 
+;; 行番号表示
+(global-linum-mode t)
 
 
 ;; マウスで選択するとコピーする Emacs 24 ではデフォルトが nil
@@ -85,11 +87,11 @@
 )
 
 ;; rails-yasnippetのロード
-(require 'yasnippet)
+;(require 'yasnippet)
 ;(yas/initialize)
 ;(yas/load-directory "~/.emacs.d/elisp/yasnippets-rails/rails-snippets")
 
-;;================================
+
 ;;
 ;;     anything
 ;;

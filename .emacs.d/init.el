@@ -26,9 +26,12 @@
 ;;(setq jaspace-highlight-tabs t) ; highlight tabs
 ;(setq jaspace-highlight-tabs ?^ ) ; use ^ as a tab marker
 
-;; 行番号表示
-(global-linum-mode t)
+;; make window transparent(windowの透明化)
+;(set-frame-parameter nil 'alpha 85)
 
+;; 行番号表示
+(require 'linum)
+(global-linum-mode)
 
 ;; マウスで選択するとコピーする Emacs 24 ではデフォルトが nil
 (setq mouse-drag-copy-region t)
@@ -50,25 +53,26 @@
   ;;必要であればプロキシの設定を行う
   ;;(setq url-proxy-services '(("http" . "localhost:8339")))
   ;;install-elispの関数を利用可能にする
-  (auto-install-compatibility-setup))
+  (auto-install-compatibility-setup)
+)
  
-    ;; 自動補完機能の設定
-    (require 'auto-complete)
-    (require 'auto-complete-config)
-    ;; グローバルでauto-completeを利用
-    (global-auto-complete-mode t)
-    (define-key ac-completing-map (kbd "M-n") 'ac-next)      ; M-nで次候補選択
-    (define-key ac-completing-map (kbd "M-p") 'ac-previous)  ; M-pで前候補選択
-    (setq ac-dwim t)  ; 空気読んでほしい
-    ;; 情報源として
-    ;; * ac-source-filename
-    ;; * ac-source-words-in-same-mode-buffers
-    ;; を利用
-    (setq-default ac-sources '(ac-source-filename ac-source-words-in-same-mode-buffers))
-    ;; また、Emacs Lispモードではac-source-symbolsを追加で利用
-    (add-hook 'emacs-lisp-mode-hook (lambda () (add-to-list 'ac-sources 'ac-source-symbols t)))
-    ;; 以下、自動で補完する人用
-    (setq ac-auto-start 3)
+;; 自動補完機能の設定
+(require 'auto-complete)
+(require 'auto-complete-config)
+;; グローバルでauto-completeを利用
+(global-auto-complete-mode t)
+(define-key ac-completing-map (kbd "M-n") 'ac-next)      ; M-nで次候補選択
+(define-key ac-completing-map (kbd "M-p") 'ac-previous)  ; M-pで前候補選択
+(setq ac-dwim t)  ; 空気読んでほしい
+;; 情報源として
+;; * ac-source-filename
+;; * ac-source-words-in-same-mode-buffers
+;; を利用
+(setq-default ac-sources '(ac-source-filename ac-source-words-in-same-mode-buffers))
+;; また、Emacs Lispモードではac-source-symbolsを追加で利用
+(add-hook 'emacs-lisp-mode-hook (lambda () (add-to-list 'ac-sources 'ac-source-symbols t)))
+;; 以下、自動で補完する人用
+(setq ac-auto-start 3)
 
 ;;================================
 ;;

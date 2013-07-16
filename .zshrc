@@ -89,12 +89,13 @@ setopt noautoremoveslash
 ## プロンプトの設定
 autoload colors
 colors
-PROMPT="%{${fg[blue]}%}[%n@%m] %(!.#.$) %{${reset_color}%}"
-PROMPT2="%{${fg[blue]}%}%_> %{${reset_color}%}"
+PROMPT="%{${fg[green]}%}[%n@%m] %(!.#.$) %{${reset_color}%}"
+PROMPT2="%{${fg[green]}%}%_> %{${reset_color}%}"
 SPROMPT="%{${fg[red]}%}correct: %R -> %r [nyae]? %{${reset_color}%}"
-RPROMPT="%{${fg[blue]}%}[%~]%{${reset_color}%}"
+RPROMPT="%{${fg[green]}%}[%~]%{${reset_color}%}"
 
 alias ll='ls -l'
+alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs -nw'
 export PATH=$PATH:~/.gem/ruby/1.8/bin/
 
 [[ -s "/Users/eeeayataka/.rvm/scripts/rvm" ]] && source "/Users/eeeayataka/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*

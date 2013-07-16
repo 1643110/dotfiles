@@ -33,6 +33,10 @@
 (require 'linum)
 (global-linum-mode)
 
+;; cua-modeの設定
+(cua-mode t) ; cua-modeをオン
+(setq cua-enable-cua-keys nil) ; CUAキーバインドを無効化
+
 ;; マウスで選択するとコピーする Emacs 24 ではデフォルトが nil
 (setq mouse-drag-copy-region t)
 

@@ -40,6 +40,9 @@
 ;; マウスで選択するとコピーする Emacs 24 ではデフォルトが nil
 (setq mouse-drag-copy-region t)
 
+;;(menu-bar-mode nil)  ;; メニューバー非表示
+(tool-bar-mode -1)   ;; ツールバー非表示
+
 ;; Emacs Lisp パッケージ追加
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)

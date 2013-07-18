@@ -103,6 +103,7 @@
 ;(yas/load-directory "~/.emacs.d/elisp/yasnippets-rails/rails-snippets")
 
 
+;;================================
 ;;
 ;;     anything
 ;;
@@ -111,3 +112,6 @@
 (when (require 'anything-startup nil t)
   (global-set-key (kbd "\C-x b") 'anything)
 )
+
+;; killringの履歴を表示する
+(global-set-key (kbd "M-y") 'anything-show-kill-ring)

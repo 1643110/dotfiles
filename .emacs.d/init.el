@@ -14,6 +14,14 @@
 ;; make window transparent(windowの透明化)
 (set-frame-parameter nil 'alpha 85)
 
+
+;====================================
+; inintialzation
+;====================================
+
+;; install redo+.el 
+;(install-elisp "http://www.emacswiki.org/emacs/download/redo+.el")
+
 ;====================================
 ;;jaspace.el を使った全角空白、タブ、改行表示モード
 ;;切り替えは M-x jaspace-mode-on or -off
@@ -62,7 +70,13 @@
   ;;install-elispの関数を利用可能にする
   (auto-install-compatibility-setup)
 )
- 
+
+;; redo+の設定
+(when (require 'redo+ nil t)
+  (global-set-key (kbd "C-'") 'redo)
+  ;;(global-set-key (kbd "C-.") 'redo) ;;JIS Keyboard
+)
+
 ;; 自動補完機能の設定
 (require 'auto-complete)
 (require 'auto-complete-config)

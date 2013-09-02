@@ -44,6 +44,9 @@
 ;; cua-modeの設定
 (cua-mode t) ; cua-modeをオン
 (setq cua-enable-cua-keys nil) ; CUAキーバインドを無効化
+(define-key cua-global-keymap (kbd "<C-return>") nil)
+(global-set-key (kbd "C-c RET") 'cua-set-rectangle-mark)
+
 
 ;; マウスで選択するとコピーする Emacs 24 ではデフォルトが nil
 (setq mouse-drag-copy-region t)

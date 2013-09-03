@@ -48,6 +48,12 @@
 (global-set-key (kbd "C-c RET") 'cua-set-rectangle-mark)
 
 
+;; 折り返し表示（標準は折り返さないが、C-c C-lで切り替え可能）
+(setq-default truncate-partial-width-windows t)
+(setq-default truncate-lines t)
+(global-set-key "\C-c\C-l" 'toggle-truncate-lines)
+
+
 ;; マウスで選択するとコピーする Emacs 24 ではデフォルトが nil
 (setq mouse-drag-copy-region t)
 
@@ -74,11 +80,15 @@
   (auto-install-compatibility-setup)
 )
 
-;; redo+の設定
-(when (require 'redo+ nil t)
-  (global-set-key (kbd "C-'") 'redo)
-  ;;(global-set-key (kbd "C-.") 'redo) ;;JIS Keyboard
-)
+;; redo+の設定(何故が使えなかったので、undo-treeに乗り換えてみる)
+;; (when (require 'redo+ nil t)
+;;   (global-set-key (kbd "C-'") 'redo)
+;;   ;;(global-set-key (kbd "C-.") 'redo) ;;JIS Keyboard
+;; )
+;; undo-treeの設定
+(require 'undo-tree)
+(global-undo-tree-mode t)
+(global-set-key (kbd "M-/") 'undo-tree-redo)
 
 ;; 自動補完機能の設定
 (require 'auto-complete)

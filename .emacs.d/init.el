@@ -74,11 +74,15 @@
   (auto-install-compatibility-setup)
 )
 
-;; redo+の設定
-(when (require 'redo+ nil t)
-  (global-set-key (kbd "C-'") 'redo)
-  ;;(global-set-key (kbd "C-.") 'redo) ;;JIS Keyboard
-)
+;; redo+の設定(何故が使えなかったので、undo-treeに乗り換えてみる)
+;; (when (require 'redo+ nil t)
+;;   (global-set-key (kbd "C-'") 'redo)
+;;   ;;(global-set-key (kbd "C-.") 'redo) ;;JIS Keyboard
+;; )
+;; undo-treeの設定
+(require 'undo-tree)
+(global-undo-tree-mode t)
+(global-set-key (kbd "M-/") 'undo-tree-redo)
 
 ;; 自動補完機能の設定
 (require 'auto-complete)

@@ -95,9 +95,5 @@ SPROMPT="%{${fg[red]}%}correct: %R -> %r [nyae]? %{${reset_color}%}"
 RPROMPT="%{${fg[green]}%}[%~]%{${reset_color}%}"
 
 alias ll='ls -l'
-alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs -nw'
-export PATH=$PATH:~/.gem/ruby/1.8/bin/
-
-[[ -s "/Users/eeeayataka/.rvm/scripts/rvm" ]] && source "/Users/eeeayataka/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 export SVN_EDITOR=/usr/bin/vim

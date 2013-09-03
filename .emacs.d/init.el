@@ -48,6 +48,12 @@
 (global-set-key (kbd "C-c RET") 'cua-set-rectangle-mark)
 
 
+;; 折り返し表示（標準は折り返さないが、C-c C-lで切り替え可能）
+(setq-default truncate-partial-width-windows t)
+(setq-default truncate-lines t)
+(global-set-key "\C-c\C-l" 'toggle-truncate-lines)
+
+
 ;; マウスで選択するとコピーする Emacs 24 ではデフォルトが nil
 (setq mouse-drag-copy-region t)
 

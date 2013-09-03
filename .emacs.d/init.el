@@ -21,20 +21,39 @@
 
 ;; install redo+.el 
 ;(install-elisp "http://www.emacswiki.org/emacs/download/redo+.el")
+(require 'cl)
 
 ;====================================
 ;;jaspace.el を使った全角空白、タブ、改行表示モード
 ;;切り替えは M-x jaspace-mode-on or -off
 ;====================================
 ;(require 'jaspace)
-;; 全角空白を表示させる。
-;(setq jaspace-alternate-jaspace-string "□")
+;; ;; 全角空白を表示させる。
+;; (global-whitespace-mode 1)
+;; ;; スペースの定義は全角スペースとする。
+;; (setq whitespace-space-regexp "\x3000+")
 
-;; タブ記号を表示。
-;;(setq jaspace-highlight-tabs t) ; highlight tabs
-;(setq jaspace-highlight-tabs ?^ ) ; use ^ as a tab marker
+;; ;; 改行の色を変更
+;; (set-face-foreground 'whitespace-newline "gray40")
 
-;; make window transparent(windowの透明化)
+;; ;; 半角スペースと改行を除外
+;; (dolist (d '((space-mark ?\ ) (newline-mark ?\n)))
+;;   (setq whitespace-display-mappings
+;;         (delete-if
+;;          '(lambda (e) (and (eq (car d) (car e))
+;;                            (eq (cadr d) (cadr e))))
+;;          whitespace-display-mappings)))
+
+;; ;; 全角スペースと改行を追加
+;; (dolist (e '((space-mark   ?\x3000 [?\□])
+;;              (newline-mark ?\n     [?\u21B5 ?\n] [?$ ?\n])))
+;;   (add-to-list 'whitespace-display-mappings e))
+
+;; ;; 強調したくない要素を削除
+;; (dolist (d '(face lines space-before-tab
+;;                   indentation empty space-after-tab tab-mark))
+;;   (setq whitespace-style (delq d whitespace-style)))
+
 ;(set-frame-parameter nil 'alpha 85)
 
 ;; 行番号表示
@@ -85,10 +104,11 @@
 ;;   (global-set-key (kbd "C-'") 'redo)
 ;;   ;;(global-set-key (kbd "C-.") 'redo) ;;JIS Keyboard
 ;; )
-;; undo-treeの設定
-(require 'undo-tree)
-(global-undo-tree-mode t)
-(global-set-key (kbd "M-/") 'undo-tree-redo)
+;; undo-treeの設定(M-x list-packagesでundo-treeをインストール)
+(when (require 'undo-tree nil t)
+  (global-undo-tree-mode t)
+  (global-set-key (kbd "M-/") 'undo-tree-redo)
+)
 
 ;; 自動補完機能の設定
 (require 'auto-complete)

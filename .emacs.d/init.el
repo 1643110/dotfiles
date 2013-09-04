@@ -21,38 +21,24 @@
 
 ;; install redo+.el 
 ;(install-elisp "http://www.emacswiki.org/emacs/download/redo+.el")
-(require 'cl)
 
-;====================================
-;;jaspace.el を使った全角空白、タブ、改行表示モード
-;;切り替えは M-x jaspace-mode-on or -off
-;====================================
-;(require 'jaspace)
-;; ;; 全角空白を表示させる。
-;; (global-whitespace-mode 1)
-;; ;; スペースの定義は全角スペースとする。
-;; (setq whitespace-space-regexp "\x3000+")
+;; タブ, 全角スペース, 行末空白表示
+(defface my-face-b-1 '((t (:background "NavajoWhite4"))) nil) ; 全角スペース
+(defface my-face-b-2 '((t (:background "gray10"))) nil)	      ; タブ
+(defface my-face-u-1 '((t (:background "SteelBlue" :underline t))) nil) ; 行末空白
+(defvar my-face-b-1 'my-face-b-1)
+(defvar my-face-b-2 'my-face-b-2)
+(defvar my-face-u-1 'my-face-u-1)
+(defadvice font-lock-mode (before my-font-lock-mode ())
+ (font-lock-add-keywords
+ major-mode
+ '(("\t" 0 my-face-b-2 append)
+ ("　" 0 my-face-b-1 append)
+ ("[ \t]+$" 0 my-face-u-1 append)
+ )))
+(ad-enable-advice 'font-lock-mode 'before 'my-font-lock-mode)
+(ad-activate 'font-lock-mode)
 
-;; ;; 改行の色を変更
-;; (set-face-foreground 'whitespace-newline "gray40")
-
-;; ;; 半角スペースと改行を除外
-;; (dolist (d '((space-mark ?\ ) (newline-mark ?\n)))
-;;   (setq whitespace-display-mappings
-;;         (delete-if
-;;          '(lambda (e) (and (eq (car d) (car e))
-;;                            (eq (cadr d) (cadr e))))
-;;          whitespace-display-mappings)))
-
-;; ;; 全角スペースと改行を追加
-;; (dolist (e '((space-mark   ?\x3000 [?\□])
-;;              (newline-mark ?\n     [?\u21B5 ?\n] [?$ ?\n])))
-;;   (add-to-list 'whitespace-display-mappings e))
-
-;; ;; 強調したくない要素を削除
-;; (dolist (d '(face lines space-before-tab
-;;                   indentation empty space-after-tab tab-mark))
-;;   (setq whitespace-style (delq d whitespace-style)))
 
 ;(set-frame-parameter nil 'alpha 85)
 

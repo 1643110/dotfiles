@@ -148,3 +148,9 @@
 
 ;; killringの履歴を表示する
 (global-set-key (kbd "M-y") 'anything-show-kill-ring)
+
+;;================================
+;;     Git
+;;================================
+;; magit の設定(M-x list-packages -> magit)
+(require 'magit)

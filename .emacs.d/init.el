@@ -152,5 +152,7 @@
 ;;================================
 ;;     Git
 ;;================================
-;; magit の設定(M-x list-packages -> magit)
-(require 'magit)
+;; magit の設定(M-x list-packages -> magit) 
+;;   magitがインストールされていなければloadさせない
+(when (require 'magit nil t)
+)

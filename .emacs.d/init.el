@@ -135,6 +135,45 @@
 ;(yas/initialize)
 ;(yas/load-directory "~/.emacs.d/elisp/yasnippets-rails/rails-snippets")
 
+;;================================
+;;     tabbar
+;;================================
+;; tabbar install(M-x list-packages -> tabbar) 
+;; tabbar.el
+(require 'tabbar)
+(tabbar-mode 1)
+;; グループ化しない
+(setq tabbar-buffer-groups-function nil)
+;; 左に表示されるボタンを無効化
+(dolist (btn '(tabbar-buffer-home-button
+               tabbar-scroll-left-button
+               tabbar-scroll-right-button))
+  (set btn (cons (cons "" nil)
+                 (cons "" nil))))
+;; タブ同士の間隔
+(setq tabbar-separator '(0.8))
+;; 外観変更
+(set-face-attribute			;バー自体の色
+ 'tabbar-default nil
+ :family (face-attribute 'default :family)
+ :background "white"
+ :height 0.9)
+(set-face-attribute  			;アクティブなタブ
+ 'tabbar-selected nil
+ :background "black"
+ :foreground "white"
+ :weight 'bold
+ :box nil)
+(set-face-attribute			;非アクティブなタブ
+ 'tabbar-unselected nil
+ :background "white"
+ :foreground "black"
+ :box nil)
+;; タブ移動
+;; (global-set-key (kbd "M-]") 'tabbar-forward-tab)
+;; (global-set-key (kbd "M-[") 'tabbar-backward-tab)
+(global-set-key "\M-]" 'tabbar-forward)
+(global-set-key "\M-[" 'tabbar-backward)
 
 ;;================================
 ;;

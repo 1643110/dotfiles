@@ -19,8 +19,8 @@
 ; inintialzation
 ;====================================
 
-;; install redo+.el 
-;(install-elisp "http://www.emacswiki.org/emacs/download/redo+.el")
+;; 起動時、Welcome to GNU Emacs画面非表示
+(setq inhibit-startup-message t)
 
 ;; タブ, 全角スペース, 行末空白表示
 (defface my-face-b-1 '((t (:background "NavajoWhite4"))) nil) ; 全角スペース
@@ -38,9 +38,6 @@
  )))
 (ad-enable-advice 'font-lock-mode 'before 'my-font-lock-mode)
 (ad-activate 'font-lock-mode)
-
-
-;(set-frame-parameter nil 'alpha 85)
 
 ;; 行番号表示
 (require 'linum)
@@ -172,7 +169,7 @@
 ;; タブ移動
 ;;;; 以下のキーバインドを有効にすると
 ;;;; PageDown,PageUp,Delete,Home,Endキーで挙動が怪しいので
-;;;; defaultの C-c C-left , C-c C-rightにてタブ移動とする
+;;;; defaultの C-x C-left , C-x C-rightにてタブ移動とする
 ;; (global-set-key "\M-]" 'tabbar-forward)
 ;; (global-set-key "\M-[" 'tabbar-backward)
 

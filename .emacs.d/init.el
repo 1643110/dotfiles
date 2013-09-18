@@ -62,7 +62,29 @@
 ;;(menu-bar-mode nil)  ;; メニューバー非表示
 (tool-bar-mode -1)   ;; ツールバー非表示
 
-;; Emacs Lisp パッケージ追加
+;====================================
+; dired 設定
+;====================================
+(require 'dired)
+(defun dired-open-in-accordance-with-situation ()
+    (interactive)
+    (cond ((string-match "\\(?:\\.\\.?\\)"
+                         (format "%s" (thing-at-point 'filename)))
+           (dired-find-alternate-file))
+          ((file-directory-p (dired-get-filename))
+           (dired-find-alternate-file))
+          (t
+           (dired-find-file))))
+(setq ls-lisp-dirs-first t)
+(define-key dired-mode-map (kbd "RET") 'dired-open-in-accordance-with-situation)
+(define-key dired-mode-map (kbd "a") 'dired-find-file)
+(define-key dired-mode-map (kbd "<left>") 'dired-up-directory)
+(define-key dired-mode-map (kbd "<right>") 'dired-open-in-accordance-with-situation)
+
+
+;====================================
+; Emacs Lisp パッケージ追加
+;====================================
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))

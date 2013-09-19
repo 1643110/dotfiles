@@ -78,8 +78,8 @@
 (setq ls-lisp-dirs-first t)
 (define-key dired-mode-map (kbd "RET") 'dired-open-in-accordance-with-situation)
 (define-key dired-mode-map (kbd "a") 'dired-find-file)
-(define-key dired-mode-map (kbd "<left>") 'dired-up-directory)
-(define-key dired-mode-map (kbd "<right>") 'dired-open-in-accordance-with-situation)
+;; (define-key dired-mode-map (kbd "<left>") 'dired-up-directory) 動きがあまり好ましくおもわないので、左右キーのキーバインドを無効化
+;; (define-key dired-mode-map (kbd "<right>") 'dired-open-in-accordance-with-situation)
 
 
 ;====================================
@@ -170,7 +170,7 @@
   (set btn (cons (cons "" nil)
                  (cons "" nil))))
 ;; タブ同士の間隔
-(setq tabbar-separator '(0.8))
+(setq tabbar-separator '(1.2))
 ;; 外観変更
 (set-face-attribute			;バー自体の色
  'tabbar-default nil

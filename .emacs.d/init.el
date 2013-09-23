@@ -19,6 +19,12 @@
 ; inintialzation
 ;====================================
 
+(let ((default-directory (expand-file-name "~/.emacs.d/elisp")))
+  (add-to-list 'load-path default-directory)
+  (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
+      (normal-top-level-add-subdirs-to-load-path)))
+
+
 ;; 起動時、Welcome to GNU Emacs画面非表示
 (setq inhibit-startup-message t)
 
@@ -153,6 +159,17 @@
 ;(require 'yasnippet)
 ;(yas/initialize)
 ;(yas/load-directory "~/.emacs.d/elisp/yasnippets-rails/rails-snippets")
+
+
+;;================================
+;;     scala
+;;================================
+;; scala-mode2
+(require 'scala-mode2)
+;; ENSIME for scala
+(add-to-list 'load-path "~/.emacs.d/elisp/ensime/elisp/")
+(require 'ensime)
+(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
 
 ;;================================
 ;;     tabbar

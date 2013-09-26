@@ -24,6 +24,9 @@
   (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
       (normal-top-level-add-subdirs-to-load-path)))
 
+;;行ハイライト
+(global-hl-line-mode)
+(set-face-background 'hl-line "#1C1C")
 
 ;; 起動時、Welcome to GNU Emacs画面非表示
 (setq inhibit-startup-message t)

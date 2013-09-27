@@ -101,8 +101,8 @@
               (t
                (message "Quit")
                (throw 'end-flag t))))))
-  (global-set-key "\C-c\C-r" 'my-window-resizer)
 )
+(global-set-key "\C-c\C-r" 'my-window-resizer)
 
 ;====================================
 ; Emacs Lisp パッケージ追加
@@ -114,7 +114,7 @@
 
 (setq load-path (cons "~/.emacs.d/elisp" load-path))
 
-;;auto-installの設定
+;;auto-installの設定OC
 (when(require 'auto-install nil t)
   ;;インストールディレクトリを設定する　初期値は~/.emacs.d/auto-install/
   (setq auto-install-directory "~/.emacs.d/elisp/")
@@ -253,7 +253,7 @@
   (when (require 'popwin)
     (setq display-buffer-function 'popwin:display-buffer)
     (setq popwin:popup-window-position 'left)
-    (push '(direx:direx-mode :position left :width 25 :dedicated t) popwin:special-display-config)
+    (push '(direx:direx-mode :position left :width 40 :dedicated t) popwin:special-display-config)
   )
 )
 

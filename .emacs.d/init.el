@@ -71,25 +71,38 @@
 ;;(menu-bar-mode nil)  ;; メニューバー非表示
 (tool-bar-mode -1)   ;; ツールバー非表示
 
-;====================================
-; dired 設定
-;====================================
-(require 'dired)
-(defun dired-open-in-accordance-with-situation ()
-    (interactive)
-    (cond ((string-match "\\(?:\\.\\.?\\)"
-                         (format "%s" (thing-at-point 'filename)))
-           (dired-find-alternate-file))
-          ((file-directory-p (dired-get-filename))
-           (dired-find-alternate-file))
-          (t
-           (dired-find-file))))
-(setq ls-lisp-dirs-first t)
-(define-key dired-mode-map (kbd "RET") 'dired-open-in-accordance-with-situation)
-(define-key dired-mode-map (kbd "a") 'dired-find-file)
-;; (define-key dired-mode-map (kbd "<left>") 'dired-up-directory) 動きがあまり好ましくおもわないので、左右キーのキーバインドを無効化
-;; (define-key dired-mode-map (kbd "<right>") 'dired-open-in-accordance-with-situation)
 
+;; windows resize
+(defun my-window-resizer ()
+  "Control window size and position."
+  (interactive)
+  (let ((window-obj (selected-window))
+        (current-width (window-width))
+        (current-height (window-height))
+        (dx (if (= (nth 0 (window-edges)) 0) 1
+              -1))
+        (dy (if (= (nth 1 (window-edges)) 0) 1
+              -1))
+        c)
+    (catch 'end-flag
+      (while t
+        (message "size[%dx%d]"
+                 (window-width) (window-height))
+        (setq c (read-char))
+        (cond ((= c ?l)
+               (enlarge-window-horizontally dx))
+              ((= c ?h)
+               (shrink-window-horizontally dx))
+              ((= c ?j)
+               (enlarge-window dy))
+              ((= c ?k)
+               (shrink-window dy))
+              ;; otherwise
+              (t
+               (message "Quit")
+               (throw 'end-flag t))))))
+  (global-set-key "\C-c\C-r" 'my-window-resizer)
+)
 
 ;====================================
 ; Emacs Lisp パッケージ追加
@@ -143,9 +156,7 @@
 (setq ac-auto-start 3)
 
 ;;================================
-;;
 ;;     Ruby on Rails 
-;;
 ;;================================
 ;; rinariの設定
 (add-to-list 'load-path "~/.emacs.d/elisp/rinari")
@@ -216,22 +227,42 @@
 ;; (global-set-key "\M-[" 'tabbar-backward)
 
 ;;================================
-;;
 ;;     anything
-;;
 ;;================================
 ;; anything の設定
 (when (require 'anything-startup nil t)
   (global-set-key (kbd "\C-x b") 'anything)
+  ;; killringの履歴を表示する
+  (global-set-key (kbd "M-y") 'anything-show-kill-ring)
 )
 
-;; killringの履歴を表示する
-(global-set-key (kbd "M-y") 'anything-show-kill-ring)
 
 ;;================================
 ;;     Git
 ;;================================
 ;; magit の設定(M-x list-packages -> magit) 
 ;;   magitがインストールされていなければloadさせない
-(when (require 'magit nil t)
+(when (require 'magit nil t))
+
+;;================================
+;;     direx popwin
+;;================================
+(when (require 'direx)
+  (global-set-key (kbd "C-x C-j") 'direx:jump-to-directory-other-window)
+
+  (when (require 'popwin)
+    (setq display-buffer-function 'popwin:display-buffer)
+    (setq popwin:popup-window-position 'left)
+    (push '(direx:direx-mode :position left :width 25 :dedicated t) popwin:special-display-config)
+  )
 )
+
+;; ;; 起動時に2分割
+;; (setq w (selected-window))
+;; (setq w2 (split-window w nil t))
+;; (add-hook 'after-init-hook (lambda()
+;;     (setq w (selected-window))
+;;     (setq w2 (split-window w (- (window-height w) 10)))
+;;     (select-window w2)
+;;     (shell)
+;;     (select-window w)))

@@ -27,6 +27,7 @@
 ;;行ハイライト
 (global-hl-line-mode)
 (set-face-background 'hl-line "#1C1C")
+(setq hl-line-face 'underline)
 
 ;; 起動時、Welcome to GNU Emacs画面非表示
 (setq inhibit-startup-message t)
@@ -236,25 +237,36 @@
   (global-set-key (kbd "M-y") 'anything-show-kill-ring)
 )
 
-
 ;;================================
 ;;     Git
 ;;================================
 ;; magit の設定(M-x list-packages -> magit) 
-;;   magitがインストールされていなければloadさせない
 (when (require 'magit nil t))
 
 ;;================================
-;;     direx popwin
+;;     direx
 ;;================================
-(when (require 'direx)
-  (global-set-key (kbd "C-x C-j") 'direx:jump-to-directory-other-window)
+(when (require 'direx) (global-set-key (kbd "C-x C-j") 'direx:jump-to-directory-other-window) )
 
-  (when (require 'popwin)
-    (setq display-buffer-function 'popwin:display-buffer)
-    (setq popwin:popup-window-position 'left)
-    (push '(direx:direx-mode :position left :width 40 :dedicated t) popwin:special-display-config)
-  )
+;;================================
+;;     google-translate
+;;================================
+(when (require 'google-translate)
+  ;; keybind C-c C-t
+  (global-set-key [(C c) (C t)] 'google-translate-at-point)
+  ;; default setting en -> ja
+  (custom-set-variables
+    '(google-translate-default-source-language "en")
+    '(google-translate-default-target-language "ja"))
+)
+
+;;================================
+;;     popwin
+;;================================
+(when (require 'popwin)
+  (setq display-buffer-function 'popwin:display-buffer)
+  (push '(direx:direx-mode :position left :width 40 :dedicated t) popwin:special-display-config)
+  (push '("*Google Translate*" :position bottom :dedicated t) popwin:special-display-config)
 )
 
 ;; ;; 起動時に2分割

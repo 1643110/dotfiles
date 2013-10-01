@@ -252,13 +252,24 @@
 ;;     google-translate
 ;;================================
 (when (require 'google-translate)
-  ;; keybind C-c C-t
-  (global-set-key [(C c) (C t)] 'google-translate-at-point)
-  ;; default setting en -> ja
-  (custom-set-variables
-    '(google-translate-default-source-language "en")
-    '(google-translate-default-target-language "ja"))
-)
+  ;; en -> ja
+  (defun google-translate-en-ja ()
+    (interactive)
+    (custom-set-variables
+      '(google-translate-default-source-language "en")
+      '(google-translate-default-target-language "ja"))
+    (google-translate-query-translate))
+  ;;ja -> en 
+  (defun google-translate-ja-en ()
+    (interactive)
+    (custom-set-variables
+     '(google-translate-default-source-language "ja")
+     '(google-translate-default-target-language "en"))
+    (google-translate-query-translate))
+  ;; keybind
+  (global-set-key (kbd "C-c j") 'google-translate-ja-en)
+  (global-set-key (kbd "C-c e") 'google-translate-en-ja)
+  (global-set-key (kbd "C-c t") 'google-translate-at-point))
 
 ;;================================
 ;;     popwin
@@ -267,6 +278,7 @@
   (setq display-buffer-function 'popwin:display-buffer)
   (push '(direx:direx-mode :position left :width 40 :dedicated t) popwin:special-display-config)
   (push '("*Google Translate*" :position bottom :dedicated t) popwin:special-display-config)
+  (push '("*Completions*" :position right :dedicated t) popwin:special-display-config)
 )
 
 ;; ;; 起動時に2分割

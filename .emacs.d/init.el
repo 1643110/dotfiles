@@ -188,6 +188,13 @@
 (setq ac-auto-start 3)
 
 ;;================================
+;;          Ruby
+;;================================
+(when (require 'ruby-mode nil t)
+  (defun ruby-mode-set-encoding () ())	;magic commentの無効化
+)
+
+;;================================
 ;;     Ruby on Rails 
 ;;================================
 ;; rinariの設定

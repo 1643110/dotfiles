@@ -32,6 +32,10 @@
 ;; 起動時、Welcome to GNU Emacs画面非表示
 (setq inhibit-startup-message t)
 
+(require 'ido)
+(ido-mode t)
+
+
 ;; バッファ切り替え
 (global-set-key "\C-t" 'other-window)
 

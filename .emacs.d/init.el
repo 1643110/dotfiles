@@ -258,12 +258,6 @@
  :background "white"
  :foreground "black"
  :box nil)
-;; タブ移動
-;;;; 以下のキーバインドを有効にすると
-;;;; PageDown,PageUp,Delete,Home,Endキーで挙動が怪しいので
-;;;; defaultの C-x C-left , C-x C-rightにてタブ移動とする
-;; (global-set-key "\M-]" 'tabbar-forward)
-;; (global-set-key "\M-[" 'tabbar-backward)
 
 ;;================================
 ;;     anything

@@ -24,6 +24,9 @@
   (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
       (normal-top-level-add-subdirs-to-load-path)))
 
+(load-theme 'misterioso t)
+;;(load-theme 'light-blue t)
+
 ;;行ハイライト
 (global-hl-line-mode)
 (set-face-background 'hl-line "#1C1C")
@@ -150,7 +153,34 @@
 
 (setq load-path (cons "~/.emacs.d/elisp" load-path))
 
-;;auto-installの設定OC
+(require 'cl)
+(defvar installing-package-list
+  '(
+    ;; ここに使っているパッケージを書く。
+    scala-mode2
+    ruby-mode
+    markdown-mode
+    scss-mode
+    yaml-mode
+    auto-install
+    undo-tree
+    auto-complete
+    tabbar
+    direx
+    google-translate
+    magit
+    popwin
+    ))
+
+(let ((not-installed (loop for x in installing-package-list
+                            when (not (package-installed-p x))
+                            collect x)))
+  (when not-installed
+    (package-refresh-contents)
+    (dolist (pkg not-installed)
+        (package-install pkg))))
+
+;;auto-installの設定
 (when(require 'auto-install nil t)
   ;;インストールディレクトリを設定する　初期値は~/.emacs.d/auto-install/
   (setq auto-install-directory "~/.emacs.d/elisp/")
@@ -159,44 +189,36 @@
   ;;必要であればプロキシの設定を行う
   ;;(setq url-proxy-services '(("http" . "localhost:8339")))
   ;;install-elispの関数を利用可能にする
-  (auto-install-compatibility-setup)
-)
+  (auto-install-compatibility-setup))
 
-;; redo+の設定(何故が使えなかったので、undo-treeに乗り換えてみる)
-;; (when (require 'redo+ nil t)
-;;   (global-set-key (kbd "C-'") 'redo)
-;;   ;;(global-set-key (kbd "C-.") 'redo) ;;JIS Keyboard
-;; )
-;; undo-treeの設定(M-x list-packagesでundo-treeをインストール)
+;; undo-treeの設定
 (when (require 'undo-tree nil t)
   (global-undo-tree-mode t)
-  (global-set-key (kbd "M-/") 'undo-tree-redo)
-)
+  (global-set-key (kbd "M-/") 'undo-tree-redo))
 
 ;; 自動補完機能の設定
-(require 'auto-complete)
-(require 'auto-complete-config)
-;; グローバルでauto-completeを利用
-(global-auto-complete-mode t)
-(define-key ac-completing-map (kbd "M-n") 'ac-next)      ; M-nで次候補選択
-(define-key ac-completing-map (kbd "M-p") 'ac-previous)  ; M-pで前候補選択
-(setq ac-dwim t)  ; 空気読んでほしい
-;; 情報源として
-;; * ac-source-filename
-;; * ac-source-words-in-same-mode-buffers
-;; を利用
-(setq-default ac-sources '(ac-source-filename ac-source-words-in-same-mode-buffers))
-;; また、Emacs Lispモードではac-source-symbolsを追加で利用
-(add-hook 'emacs-lisp-mode-hook (lambda () (add-to-list 'ac-sources 'ac-source-symbols t)))
-;; 以下、自動で補完する人用
-(setq ac-auto-start 3)
+(when (require 'auto-complete nil t)
+  (require 'auto-complete-config)
+  ;; グローバルでauto-completeを利用
+  (global-auto-complete-mode t)
+  (define-key ac-completing-map (kbd "M-n") 'ac-next)
+  (define-key ac-completing-map (kbd "M-p") 'ac-previous)
+  (setq ac-dwim t)  ; 空気読んでほしい
+  ;; 情報源として
+  ;; * ac-source-filename
+  ;; * ac-source-words-in-same-mode-buffers
+  ;; を利用
+  (setq-default ac-sources '(ac-source-filename ac-source-words-in-same-mode-buffers))
+  ;; また、Emacs Lispモードではac-source-symbolsを追加で利用
+  (add-hook 'emacs-lisp-mode-hook (lambda () (add-to-list 'ac-sources 'ac-source-symbols t)))
+  ;; 以下、自動で補完する人用
+  (setq ac-auto-start 3))
 
 ;;================================
 ;;          Ruby
 ;;================================
 (when (require 'ruby-mode nil t)
-  (defun ruby-mode-set-encoding () ())	;magic commentの無効化
-)
+  (defun ruby-mode-set-encoding () ()))	;magic commentの無効化
 
 ;;================================
 ;;     Ruby on Rails 
@@ -209,8 +231,7 @@
 (add-to-list 'load-path "~/.emacs.d/elisp/rhtml")
 (when (require 'rhtml-mode nil t)
   (add-hook 'rhtml-mode-hook
-	    (lambda () (rinari-launch)))
-)
+	    (lambda () (rinari-launch))))
 
 ;; rails-yasnippetのロード
 ;(require 'yasnippet)
@@ -222,46 +243,44 @@
 ;;     scala
 ;;================================
 ;; scala-mode2
-(require 'scala-mode2)
-;; ENSIME for scala
-(add-to-list 'load-path "~/.emacs.d/elisp/ensime/elisp/")
-(require 'ensime)
-(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+(when (require 'scala-mode2 nil t)
+  ;; ENSIME for scala
+  (add-to-list 'load-path "~/.emacs.d/elisp/ensime/elisp/")
+  (when (require 'ensime nil t)
+    (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)))
 
 ;;================================
 ;;     tabbar
 ;;================================
-;; tabbar install(M-x list-packages -> tabbar) 
-;; tabbar.el
-(require 'tabbar)
-(tabbar-mode 1)
-;; グループ化しない
-(setq tabbar-buffer-groups-function nil)
-;; 左に表示されるボタンを無効化
-(dolist (btn '(tabbar-buffer-home-button
-               tabbar-scroll-left-button
-               tabbar-scroll-right-button))
-  (set btn (cons (cons "" nil)
-                 (cons "" nil))))
-;; タブ同士の間隔
-(setq tabbar-separator '(1.2))
-;; 外観変更
-(set-face-attribute			;バー自体の色
- 'tabbar-default nil
- :family (face-attribute 'default :family)
- :background "white"
- :height 0.9)
-(set-face-attribute  			;アクティブなタブ
- 'tabbar-selected nil
- :background "black"
- :foreground "white"
- :weight 'bold
- :box nil)
-(set-face-attribute			;非アクティブなタブ
- 'tabbar-unselected nil
- :background "white"
- :foreground "black"
- :box nil)
+(when (require 'tabbar nil t)
+  (tabbar-mode 1)
+  ;; グループ化しない
+  (setq tabbar-buffer-groups-function nil)
+  ;; 左に表示されるボタンを無効化
+  (dolist (btn '(tabbar-buffer-home-button
+		 tabbar-scroll-left-button
+		 tabbar-scroll-right-button))
+    (set btn (cons (cons "" nil)
+		   (cons "" nil))))
+  ;; タブ同士の間隔
+  (setq tabbar-separator '(1.2))
+  ;; 外観変更
+  (set-face-attribute			;バー自体の色
+   'tabbar-default nil
+   :family (face-attribute 'default :family)
+   :background "white"
+   :height 0.9)
+  (set-face-attribute  			;アクティブなタブ
+   'tabbar-selected nil
+   :background "black"
+   :foreground "white"
+   :weight 'bold
+   :box nil)
+  (set-face-attribute			;非アクティブなタブ
+   'tabbar-unselected nil
+   :background "white"
+   :foreground "black"
+   :box nil))
 
 ;;================================
 ;;     anything
@@ -270,24 +289,23 @@
 (when (require 'anything-startup nil t)
   (global-set-key (kbd "\C-x b") 'anything)
   ;; killringの履歴を表示する
-  (global-set-key (kbd "M-y") 'anything-show-kill-ring)
-)
+  (global-set-key (kbd "M-y") 'anything-show-kill-ring))
 
 ;;================================
 ;;     Git
 ;;================================
-;; magit の設定(M-x list-packages -> magit) 
+;; magit の設定
 (when (require 'magit nil t))
 
 ;;================================
 ;;     direx
 ;;================================
-(when (require 'direx) (global-set-key (kbd "C-x C-j") 'direx:jump-to-directory-other-window) )
+(when (require 'direx nil t) (global-set-key (kbd "C-x C-j") 'direx:jump-to-directory-other-window) )
 
 ;;================================
 ;;     google-translate
 ;;================================
-(when (require 'google-translate)
+(when (require 'google-translate nil t)
   ;; en -> ja
   (defun google-translate-en-ja ()
     (interactive)
@@ -310,19 +328,9 @@
 ;;================================
 ;;     popwin
 ;;================================
-(when (require 'popwin)
+(when (require 'popwin nil t)
   (setq display-buffer-function 'popwin:display-buffer)
   (push '(direx:direx-mode :position left :width 40 :dedicated t) popwin:special-display-config)
   (push '("*Google Translate*" :position bottom :dedicated t) popwin:special-display-config)
   ;; (push '("*Completions*" :position bottom :dedicated t) popwin:special-display-config)
 )
-
-;; ;; 起動時に2分割
-;; (setq w (selected-window))
-;; (setq w2 (split-window w nil t))
-;; (add-hook 'after-init-hook (lambda()
-;;     (setq w (selected-window))
-;;     (setq w2 (split-window w (- (window-height w) 10)))
-;;     (select-window w2)
-;;     (shell)
-;;     (select-window w)))

@@ -276,6 +276,7 @@
     markdown-mode
     scss-mode
     yaml-mode
+    anything
     auto-install
     undo-tree
     auto-complete

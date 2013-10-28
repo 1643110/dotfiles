@@ -35,8 +35,8 @@
 ;; 起動時、Welcome to GNU Emacs画面非表示
 (setq inhibit-startup-message t)
 
-(require 'ido)
-(ido-mode t)
+;; (require 'ido)
+;; (ido-mode t)
 
 ;;------------------------------------- init loader化したい ---------------------------------------------------------
 ;; Mode line setup
@@ -276,6 +276,7 @@
     markdown-mode
     scss-mode
     yaml-mode
+    anything
     auto-install
     undo-tree
     auto-complete
@@ -402,6 +403,7 @@
 ;; anything の設定
 (when (require 'anything-startup nil t)
   (global-set-key (kbd "\C-x b") 'anything)
+;;  (global-set-key (kbd "C-i") 'anything-imenu)
   ;; killringの履歴を表示する
   (global-set-key (kbd "M-y") 'anything-show-kill-ring))
 

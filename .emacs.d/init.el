@@ -194,7 +194,7 @@
 (setq mouse-drag-copy-region t)
 
 ;;(menu-bar-mode nil)  ;; メニューバー非表示
-(tool-bar-mode -1)   ;; ツールバー非表示
+;;(tool-bar-mode -1)   ;; ツールバー非表示
 
 
 ;; windows resize

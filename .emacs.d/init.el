@@ -273,6 +273,7 @@
     ;; ここに使っているパッケージを書く。
     scala-mode2
     ruby-mode
+    robe
     markdown-mode
     scss-mode
     yaml-mode
@@ -326,14 +327,22 @@
   (setq-default ac-sources '(ac-source-filename ac-source-words-in-same-mode-buffers))
   ;; また、Emacs Lispモードではac-source-symbolsを追加で利用
   (add-hook 'emacs-lisp-mode-hook (lambda () (add-to-list 'ac-sources 'ac-source-symbols t)))
+  ;; Add robe (Ruby development tools).
+  (add-hook 'robe-mode-hook 'ac-robe-setup)
   ;; 以下、自動で補完する人用
-  (setq ac-auto-start 3))
+  (setq ac-auto-start 2))
 
 ;;================================
 ;;          Ruby
 ;;================================
 (when (require 'ruby-mode nil t)
   (defun ruby-mode-set-encoding () ()))	;magic commentの無効化
+(add-hook 'ruby-mode-hook
+          '(lambda ()
+             (robe-mode)
+             (robe-ac-setup)
+             (inf-ruby-keys)
+             ))
 
 ;;================================
 ;;     Ruby on Rails 

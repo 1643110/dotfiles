@@ -1,3 +1,4 @@
+
 ;; set language Japanese
 (set-language-environment 'Japanese)
 ;; UTF-8
@@ -277,7 +278,10 @@
     markdown-mode
     scss-mode
     yaml-mode
-    anything
+    ;anything
+    helm
+    helm-ag
+    helm-descbinds
     auto-install
     undo-tree
     auto-complete
@@ -409,12 +413,28 @@
 ;;================================
 ;;     anything
 ;;================================
-;; anything の設定
-(when (require 'anything-startup nil t)
-  (global-set-key (kbd "\C-x b") 'anything)
-;;  (global-set-key (kbd "C-i") 'anything-imenu)
-  ;; killringの履歴を表示する
-  (global-set-key (kbd "M-y") 'anything-show-kill-ring))
+;; ;; anything の設定
+;; (when (require 'anything-startup nil t)
+;;   (global-set-key (kbd "\C-x b") 'anything)
+;; ;;  (global-set-key (kbd "C-i") 'anything-imenu)
+;;   ;; killringの履歴を表示する
+;;   (global-set-key (kbd "M-y") 'anything-show-kill-ring))
+
+;;================================
+;;     helm
+;;================================
+(when (require 'helm nil t)
+  (global-set-key (kbd "C-q") 'helm-mini)
+  (global-set-key (kbd "M-x") 'helm-M-x)
+  (global-set-key (kbd "M-y") 'helm-show-kill-ring)
+  (global-set-key (kbd "C-x C-f") 'helm-find-files)
+  (global-set-key (kbd "C-x C-b") 'helm-buffers-list))
+(when (require 'helm-config  nil t)
+  (define-key helm-command-map (kbd "d") 'helm-descbinds)
+  (define-key helm-command-map (kbd "g") 'helm-ag)
+  (define-key helm-command-map (kbd "o") 'helm-occur)
+  (define-key helm-command-map (kbd "y") 'yas/insert-snippet)
+  (define-key helm-command-map (kbd "M-/") 'helm-dabbrev))
 
 ;;================================
 ;;     Git

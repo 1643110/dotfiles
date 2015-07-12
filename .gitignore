@@ -6,4 +6,4 @@
 # Git で強制的に管理したいファイル "!"を先頭に付けること
 !/.emacs.d/init.el
 !/.emacs.d/conf
-
+!/.emacs.d/elisp/.keep

@@ -13,7 +13,7 @@
 ))
 
 ;; make window transparent(windowの透明化)
-(set-frame-parameter nil 'alpha 85)
+(set-frame-parameter nil 'alpha 90)
 
 
 ;====================================
@@ -269,6 +269,15 @@
 (setq load-path (cons "~/.emacs.d/elisp" load-path))
 
 (require 'cl)
+
+(if (eq system-type 'windows-nt)
+    (defvar installing-package-list
+      '(
+       ;; ここにwindows特有で使っているパッケージを書く
+       cygwin-mount
+       setup-cygwin
+       ))) ;windowsの場合、初期起動時に"~/"へ移動
+
 (defvar installing-package-list
   '(
     ;; ここに使っているパッケージを書く。
@@ -440,11 +449,15 @@
 ;;     Git
 ;;================================
 ;; magit の設定
+
+(if (eq system-type 'windows-nt)(require 'setup-cygwin)) ;windows
+
 (when (require 'magit nil t))
 
 ;;================================
 ;;     direx
 ;;================================
+(setq dired-bind-jump nil)		;C-x C-jを有効化するために左記を無効化
 (when (require 'direx nil t) (global-set-key (kbd "C-x C-j") 'direx:jump-to-directory-other-window) )
 
 ;;================================
@@ -479,3 +492,8 @@
   (push '("*Google Translate*" :position bottom :dedicated t) popwin:special-display-config)
   ;; (push '("*Completions*" :position bottom :dedicated t) popwin:special-display-config)
 )
+
+;;================================
+;;     OS判別
+;;================================
+(if (eq system-type 'windows-nt)(cd "~/")) ;windowsの場合、初期起動時に"~/"へ移動

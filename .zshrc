@@ -89,7 +89,7 @@ setopt noautoremoveslash
 ## プロンプトの設定
 autoload colors
 colors
-PROMPT="%{${fg[green]}%}[%n@%m] %(!.#.$) %{${reset_color}%}"
+PROMPT="%{${fg[green]}%}[%n@%m]%(!.#.$) %{${reset_color}%}"
 PROMPT2="%{${fg[green]}%}%_> %{${reset_color}%}"
 SPROMPT="%{${fg[red]}%}correct: %R -> %r [nyae]? %{${reset_color}%}"
 RPROMPT="%{${fg[green]}%}[%~]%{${reset_color}%}"
@@ -97,3 +97,7 @@ RPROMPT="%{${fg[green]}%}[%~]%{${reset_color}%}"
 alias ll='ls -l'
 
 export SVN_EDITOR=/usr/bin/vim
+
+if [ "$1" = "/usr/bin/imwheel" ]; then
+  /usr/bin/imwheel --kill --buttons '4 5'
+fi

@@ -97,7 +97,3 @@ RPROMPT="%{${fg[green]}%}[%~]%{${reset_color}%}"
 alias ll='ls -l'
 
 export SVN_EDITOR=/usr/bin/vim
-
-if [ "$1" = "/usr/bin/imwheel" ]; then
-  /usr/bin/imwheel --kill --buttons '4 5'
-fi

@@ -262,8 +262,9 @@
 ; Emacs Lisp パッケージ追加
 ;====================================
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(add-to-list 'package-archives '("orgmode" . "https://orgmode.org/elpa/") t)
+(add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/"))
 (package-initialize)
 
 (setq load-path (cons "~/.emacs.d/elisp" load-path))
@@ -281,7 +282,7 @@
 (defvar installing-package-list
   '(
     ;; ここに使っているパッケージを書く。
-    scala-mode2
+    scala-mode
     ruby-mode
     robe
     markdown-mode
